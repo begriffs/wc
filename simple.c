@@ -4,7 +4,7 @@
 int main(void)
 {
 	unsigned long long chars=0, words=0, lines=0;
-	char c, prev;
+	int c, prev;
 
 	for (prev=' '; (c = getchar()) != EOF; prev=c)
 	{
