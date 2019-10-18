@@ -1,18 +1,27 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 int main(void)
 {
 	unsigned long long chars=0, words=0, lines=0;
-	int c, prev;
+	int c;
+	bool gotspace = true;
 
-	for (prev=' '; (c = getchar()) != EOF; prev=c)
+	while((c = getchar()) != EOF)
 	{
 		chars++;
-		if (isspace(prev) && !isspace(c))
+		if (isspace(c))
+		{
+			gotspace = true;
+			if (c == '\n')
+				lines++;
+		}
+		else if(gotspace)
+		{
+			gotspace = false;
 			words++;
-		if (c == '\n')
-			lines++;
+		}
 	}
 	printf("%llu %llu %llu\n", lines, words, chars);
 }
