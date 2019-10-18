@@ -25,7 +25,7 @@ struct chunk
 struct counts *count_chunk(struct chunk *chunk)
 {
 	struct counts *ret = calloc(1, sizeof(struct counts));
-	int c, prev;
+	int c='\0', prev;
 
 	fseek(chunk->f, chunk->offset, SEEK_SET);
 	for (prev=' ';
