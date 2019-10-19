@@ -1,28 +1,25 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <unistd.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-#define BUFFERSIZE (size_t)1024*1024
+#include <unistd.h>
+
+#define BUFSZ 1024*1024
 
 int main(void)
 {
     unsigned long long chars=0, words=0, lines=0;
-    int c;
     bool gotspace = true;
+    char *buf = malloc(BUFSZ), c;
+    ssize_t index, length;
 
-    char *buf = malloc(BUFFERSIZE);
-    int length;
-
-    while ((length = read(0, buf, BUFFERSIZE))) {
-
-        for (int index = 0; index < length; ++index) {
+    while ((length = read(STDIN_FILENO, buf, BUFSZ)) > 0)
+	{
+        for (index = 0; index < length; ++index)
+		{
             chars++;
-            c = buf[index];
-            if (isspace(c))
+            if (isspace(c = buf[index]))
             {
                 gotspace = true;
                 if (c == '\n')
